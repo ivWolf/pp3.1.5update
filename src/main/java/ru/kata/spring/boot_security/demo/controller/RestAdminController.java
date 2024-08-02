@@ -1,39 +1,31 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
+import ru.kata.spring.boot_security.demo.repo.RoleRepository;
+import ru.kata.spring.boot_security.demo.service.UserService;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
-public class RestUserController {
-    private final UserServiceImpl userService;
+@RequestMapping("/api/admin")
+public class RestAdminController {
 
-    public RestUserController(UserServiceImpl userService) {
+    private final UserService userService;
+    private final RoleRepository roleRepository;
+
+    public RestAdminController(UserService userService, RoleRepository roleRepository) {
         this.userService = userService;
+        this.roleRepository = roleRepository;
     }
-
-    @GetMapping("/users/current/roles")
-    public List<Role> getUserRoles(@AuthenticationPrincipal User user) {
-        return user.getRoles();
-    }
-
-    @GetMapping("/users/current")
-    public User getCurrentUser(@AuthenticationPrincipal User user) {
-        return user;
-    }
-
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
@@ -61,4 +53,18 @@ public class RestUserController {
         userService.deleteById(id);
     }
 
+    @GetMapping("/roles")
+    public List<Role> getAllRoles() {
+        return roleRepository.findAll();
+    }
+
+    @PostMapping("/roles")
+    public Role createRole(@RequestBody Role role) {
+        return roleRepository.save(role);
+    }
+
+    @DeleteMapping("/roles/{id}")
+    public void deleteRoleById(@PathVariable("id") Long id) {
+        roleRepository.deleteById(id);
+    }
 }

@@ -1,7 +1,9 @@
 package ru.kata.spring.boot_security.demo.model;
 
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,7 +18,9 @@ import javax.persistence.Table;
 import java.util.Collection;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -41,6 +45,14 @@ public class User implements UserDetails {
     private List<Role> roles;
 
     public User() {
+    }
+
+    public User(String firstName, String lastName, String username, String password, List<Role> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
     }
 
     @Override
@@ -77,6 +89,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
     public String getRolesToString() {
         List<Role> list = getRoles();
         return String.valueOf(list);
