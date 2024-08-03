@@ -102,11 +102,10 @@ function closeModal() {
 
 function editModal(id) {
     let editId = `${url}/${id}`;
-    fetch(`http://localhost:8080/api/users/${id}`, {
+    fetch(`${url}/users/${id}`, {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json;charset=UTF-8'
-
         }
     }).then(res => {
         res.json().then(user => {

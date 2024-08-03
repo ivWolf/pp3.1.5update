@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kata.spring.boot_security.demo.model.Role;
-import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repo.RoleRepository;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
@@ -19,52 +17,56 @@ import java.util.List;
 @RequestMapping("/api/admin")
 public class RestAdminController {
 
-    private final UserService userService;
-    private final RoleRepository roleRepository;
+    //    private final UserService userService;
+    private final RoleService roleService;
 
-    public RestAdminController(UserService userService, RoleRepository roleRepository) {
-        this.userService = userService;
-        this.roleRepository = roleRepository;
+    public RestAdminController(UserService userService, RoleService roleService) {
+//        this.userService = userService;
+        this.roleService = roleService;
     }
 
-    @GetMapping("/users")
-    public List<User> getAllUsers() {
-        return userService.findAll();
-    }
+//    // User
+//
+//    @GetMapping("/users")
+//    public List<User> getAllUsers() {
+//        return userService.findAll();
+//    }
+//
+//    @GetMapping("/users/{id}")
+//    public User getUserById(@PathVariable("id") Long id) {
+//        return userService.findById(id);
+//    }
+//
+//    @PostMapping("/users")
+//    public User createUser(@RequestBody User user) {
+//        return userService.createUser(user);
+//    }
+//
+//    @PutMapping("/users/{id}")
+//    public User updateUser(@PathVariable("id") Long id, @RequestBody User user) {
+//        user.setId(id);
+//        return userService.updateUser(user);
+//    }
+//
+//    @DeleteMapping("/users/{id}")
+//    public void deleteUserById(@PathVariable("id") Long id) {
+//        userService.deleteById(id);
+//    }
 
-    @GetMapping("/users/{id}")
-    public User getUserById(@PathVariable("id") Long id) {
-        return userService.findById(id);
-    }
-
-    @PostMapping("/users")
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
-    }
-
-    @PutMapping("/users/{id}")
-    public User updateUser(@PathVariable("id") Long id, @RequestBody User user) {
-        user.setId(id);
-        return userService.updateUser(user);
-    }
-
-    @DeleteMapping("/users/{id}")
-    public void deleteUserById(@PathVariable("id") Long id) {
-        userService.deleteById(id);
-    }
+    // Role
 
     @GetMapping("/roles")
     public List<Role> getAllRoles() {
-        return roleRepository.findAll();
+        return roleService.findAll();
     }
 
     @PostMapping("/roles")
     public Role createRole(@RequestBody Role role) {
-        return roleRepository.save(role);
+        return roleService.saveRole(role);
     }
 
     @DeleteMapping("/roles/{id}")
     public void deleteRoleById(@PathVariable("id") Long id) {
-        roleRepository.deleteById(id);
+        roleService.deleteById(id);
     }
 }

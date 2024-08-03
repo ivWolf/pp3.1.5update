@@ -7,6 +7,7 @@ import ru.kata.spring.boot_security.demo.repo.RoleRepository;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.annotation.PostConstruct;
+import java.util.Collections;
 
 @Component
 public class Init {
@@ -24,6 +25,8 @@ public class Init {
         roleRepository.save(new Role(1L, "ROLE_ADMIN"));
         roleRepository.save(new Role(2L, "ROLE_USER"));
         userService.createUser(new User("admin", "admin", "admin", "123", roleRepository.findAll()));
-        userService.createUser(new User("user", "user1", "user2", "456", roleRepository.findById(2L).stream().toList()));
+        roleRepository.findById(2L).ifPresent(role ->
+                userService.createUser(new User("user", "user1", "user2", "456", Collections.singletonList(role)))
+        );
     }
 }
