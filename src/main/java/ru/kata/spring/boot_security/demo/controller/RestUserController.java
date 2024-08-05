@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ public class RestUserController {
         return user.getRoles();
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/users/current")
     public User getCurrentUser(@AuthenticationPrincipal User user) {
         return user;
