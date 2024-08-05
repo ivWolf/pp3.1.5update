@@ -35,32 +35,33 @@ public class RestUserController {
     public User getCurrentUser(@AuthenticationPrincipal User user) {
         return user;
     }
-
-
-    @GetMapping("/users")
-    public List<User> getAllUsers() {
-        return userService.findAll();
-    }
-
-    @GetMapping("/users/{id}")
-    public User getUserById(@PathVariable("id") Long id) {
-        return userService.findById(id);
-    }
-
-    @PostMapping("/users")
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
-    }
-
-    @PutMapping("/users/{id}")
-    public User updateUser(@PathVariable("id") Long id, @RequestBody User user) {
-        user.setId(id);
-        return userService.updateUser(user);
-    }
-
-    @DeleteMapping("/users/{id}")
-    public void deleteUserById(@PathVariable("id") Long id) {
-        userService.deleteById(id);
-    }
-
 }
+
+
+//    @GetMapping("/users")
+//    public List<User> getAllUsers() {
+//        return userService.findAll();
+//    }
+//
+//    @GetMapping("/users/{id}")
+//    public User getUserById(@PathVariable("id") Long id) {
+//        return userService.findById(id);
+//    }
+//
+//    @PostMapping("/users")
+//    public User createUser(@RequestBody User user) {
+//        return userService.createUser(user);
+//    }
+
+//    @PutMapping("/users/{id}")
+//    public User updateUser(@PathVariable("id") Long id, @RequestBody User user) {
+//        user.setId(id);
+//        return userService.updateUser(user);
+//    }
+//
+//    @DeleteMapping("/users/{id}")
+//    public void deleteUserById(@PathVariable("id") Long id) {
+//        userService.deleteById(id);
+//    }
+//
+//}
